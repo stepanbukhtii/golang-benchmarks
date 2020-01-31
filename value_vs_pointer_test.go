@@ -5,29 +5,29 @@ import (
 	"testing"
 )
 
-type Target struct {
+type ValuePointer struct {
 	Result float64
 }
 
-func (t *Target) HandlerArgumentValueLoopIndex(values []TestStructure) {
+func (t *ValuePointer) HandlerArgumentValueLoopIndex(values []TestStructure) {
 	for i := range values {
 		t.Result = values[i].Test2 + values[i].Test6 + 1
 	}
 }
 
-func (t *Target) HandlerArgumentValueLoopValue(values []TestStructure) {
+func (t *ValuePointer) HandlerArgumentValueLoopValue(values []TestStructure) {
 	for _, v := range values {
 		t.Result = v.Test2 + v.Test6 + 1
 	}
 }
 
-func (t *Target) HandlerArgumentPointerLoopIndex(values []*TestStructure) {
+func (t *ValuePointer) HandlerArgumentPointerLoopIndex(values []*TestStructure) {
 	for i := range values {
 		t.Result = values[i].Test2 + values[i].Test6 + 1
 	}
 }
 
-func (t *Target) HandlerArgumentPointerLoopValue(values []*TestStructure) {
+func (t *ValuePointer) HandlerArgumentPointerLoopValue(values []*TestStructure) {
 	for _, v := range values {
 		t.Result = v.Test2 + v.Test6 + 1
 	}
@@ -37,7 +37,7 @@ func (t *Target) HandlerArgumentPointerLoopValue(values []*TestStructure) {
 func TestArgumentValueLoopIndex(t *testing.T) {
 	customProfiler := CustomProfiler{}
 
-	var target Target
+	var target ValuePointer
 	customProfiler.Start()
 
 	values := make([]TestStructure, 1000)
@@ -64,7 +64,7 @@ func TestArgumentValueLoopIndex(t *testing.T) {
 func TestArgumentValueLoopValue(t *testing.T) {
 	customProfiler := CustomProfiler{}
 
-	var target Target
+	var target ValuePointer
 	customProfiler.Start()
 
 	values := make([]TestStructure, 1000)
@@ -91,7 +91,7 @@ func TestArgumentValueLoopValue(t *testing.T) {
 func TestArgumentPointerLoopIndex(t *testing.T) {
 	customProfiler := CustomProfiler{}
 
-	var target Target
+	var target ValuePointer
 	customProfiler.Start()
 
 	values := make([]*TestStructure, 1000)
@@ -118,7 +118,7 @@ func TestArgumentPointerLoopIndex(t *testing.T) {
 func TestArgumentPointerLoopValue(t *testing.T) {
 	customProfiler := CustomProfiler{}
 
-	var target Target
+	var target ValuePointer
 	customProfiler.Start()
 
 	values := make([]*TestStructure, 1000)
