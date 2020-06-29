@@ -14,7 +14,7 @@ type StructPointer struct {
 
 // Total heap alloc: 45 Mb 48012128 bytes. Time: 26.180074ms
 func TestStructValue(t *testing.T) {
-	customProfiler := CustomProfiler{}
+	customProfiler := MemTimeProfiler{}
 
 	counter := float64(0)
 
@@ -39,7 +39,7 @@ func TestStructValue(t *testing.T) {
 
 // Total heap alloc: 53 Mb 56012288 bytes. Time: 64.915662ms
 func TestStructPointer(t *testing.T) {
-	customProfiler := CustomProfiler{}
+	customProfiler := MemTimeProfiler{}
 
 	counter := float64(0)
 

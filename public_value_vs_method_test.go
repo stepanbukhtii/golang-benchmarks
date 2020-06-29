@@ -25,7 +25,7 @@ func (t *PublicMethod) SetResult(value float64) {
 
 // Total heap alloc: 0 Mb 0 bytes. Time: 892.232µs
 func TestPublicVariable(t *testing.T) {
-	customProfiler := CustomProfiler{}
+	customProfiler := MemTimeProfiler{}
 
 	target := PublicVariable{
 		Result: TestStructure{
@@ -53,7 +53,7 @@ func TestPublicVariable(t *testing.T) {
 
 // Total heap alloc: 0 Mb 0 bytes. Time: 2.730752ms
 func TestPublicMethod(t *testing.T) {
-	customProfiler := CustomProfiler{}
+	customProfiler := MemTimeProfiler{}
 
 	target := PublicMethod{
 		result: TestStructure{

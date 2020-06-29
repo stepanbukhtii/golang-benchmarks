@@ -35,7 +35,7 @@ func (t *ValuePointer) HandlerArgumentPointerLoopValue(values []*TestStructure) 
 
 // Total heap alloc: 0 Mb 0 bytes. Time: 639.5818ms
 func TestArgumentValueLoopIndex(t *testing.T) {
-	customProfiler := CustomProfiler{}
+	customProfiler := MemTimeProfiler{}
 
 	var target ValuePointer
 	customProfiler.Start()
@@ -62,7 +62,7 @@ func TestArgumentValueLoopIndex(t *testing.T) {
 
 // Total heap alloc: 0 Mb 0 bytes. Time: 2.140671s
 func TestArgumentValueLoopValue(t *testing.T) {
-	customProfiler := CustomProfiler{}
+	customProfiler := MemTimeProfiler{}
 
 	var target ValuePointer
 	customProfiler.Start()
@@ -89,7 +89,7 @@ func TestArgumentValueLoopValue(t *testing.T) {
 
 // Total heap alloc: 0 Mb 48000 bytes. Time: 747.8482ms
 func TestArgumentPointerLoopIndex(t *testing.T) {
-	customProfiler := CustomProfiler{}
+	customProfiler := MemTimeProfiler{}
 
 	var target ValuePointer
 	customProfiler.Start()
@@ -116,7 +116,7 @@ func TestArgumentPointerLoopIndex(t *testing.T) {
 
 // Total heap alloc: 0 Mb 48000 bytes. Time: 746.6788ms
 func TestArgumentPointerLoopValue(t *testing.T) {
-	customProfiler := CustomProfiler{}
+	customProfiler := MemTimeProfiler{}
 
 	var target ValuePointer
 	customProfiler.Start()

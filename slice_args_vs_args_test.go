@@ -23,7 +23,7 @@ func ManyArgs(firstIn, secondIn TestStructure) float64 {
 
 // Total heap alloc: 0 Mb 0 bytes. Time: 11.37786ms
 func TestSliceArgs(t *testing.T) {
-	customProfiler := CustomProfiler{}
+	customProfiler := MemTimeProfiler{}
 
 	rand.Seed(time.Now().UnixNano())
 	randomNumber := float64(rand.Intn(5-1) + 1)
@@ -55,7 +55,7 @@ func TestSliceArgs(t *testing.T) {
 
 // Total heap alloc: 0 Mb 0 bytes. Time: 11.227266ms
 func TestManyArgs(t *testing.T) {
-	customProfiler := CustomProfiler{}
+	customProfiler := MemTimeProfiler{}
 
 	rand.Seed(time.Now().UnixNano())
 	randomNumber := float64(rand.Intn(5-1) + 1)

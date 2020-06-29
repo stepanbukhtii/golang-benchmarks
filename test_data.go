@@ -1,11 +1,5 @@
 package golang_benchmark
 
-import (
-	"fmt"
-	"runtime"
-	"time"
-)
-
 const million = 1000000
 
 type TestStructure struct {
@@ -17,20 +11,22 @@ type TestStructure struct {
 	Test6 float64
 }
 
-type CustomProfiler struct {
-	m1, m2    runtime.MemStats
-	startTime time.Time
+type TestValue struct {
+	Test1 int64
+	Test2 int64
+	Test3 int64
+	Test4 int64
 }
 
-func (c *CustomProfiler) Start() {
-	c.startTime = time.Now()
-	runtime.ReadMemStats(&c.m1)
+type Output struct {
+	Value int64
+	value2 int64
 }
 
-func (c *CustomProfiler) Finish() {
-	runtime.ReadMemStats(&c.m2)
+func (o *Output) GetValue() int64 {
+	return o.Value
+}
 
-	elapsed := time.Since(c.startTime)
-	fmt.Printf("Total heap alloc: %d Mb %d bytes. Time: %s\n",
-		(c.m2.TotalAlloc-c.m1.TotalAlloc)/1024/1024, c.m2.TotalAlloc-c.m1.TotalAlloc, elapsed.String())
+func (o *Output) UpdateValue(value int64) {
+	o.Value = value
 }
