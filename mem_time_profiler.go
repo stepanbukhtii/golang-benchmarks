@@ -30,6 +30,7 @@ func (c MemTimeProfiler) Size() string {
 func (c MemTimeProfiler) Time() string {
 	return c.elapsed.String()
 }
+
 func BytesToSizeString(b int64) string {
 	const unit = 1000
 	if b < unit {

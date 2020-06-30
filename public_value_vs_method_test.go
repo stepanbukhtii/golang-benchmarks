@@ -2,78 +2,72 @@ package golang_benchmark
 
 import (
 	"fmt"
-	"math/rand"
 	"testing"
-	"time"
 )
 
+// change by public value vs change by public method
+// Result: by public value is faster
+
 type PublicVariable struct {
-	Result TestStructure
+	Result int64
+	Value  TestStructure
+}
+
+func (a *PublicVariable) Handle() {
+	if a.Result > a.Value.Test1 {
+		a.Result = a.Result - a.Value.Test1
+	} else {
+		a.Result = a.Result + a.Value.Test1
+	}
+}
+
+// Size usage 0 B time usage 87.740992ms
+func TestPublicVariable(t *testing.T) {
+	p := MemTimeProfiler{}
+	randomValues := GenerateRandomTestStructures(tenMillions)
+
+	var testObject PublicVariable
+
+	p.Start()
+	for i := 0; i < tenMillions; i++ {
+		testObject.Value = randomValues[i]
+		testObject.Handle()
+	}
+	p.Finish()
+
+	fmt.Println("Size usage", p.Size(), "time usage", p.Time())
 }
 
 type PublicMethod struct {
-	result TestStructure
+	Result int64
+	value  TestStructure
 }
 
-func (t *PublicMethod) Result() TestStructure {
-	return t.result
-}
-
-func (t *PublicMethod) SetResult(value float64) {
-	t.result.Test2 = value
-}
-
-// Total heap alloc: 0 Mb 0 bytes. Time: 892.232µs
-func TestPublicVariable(t *testing.T) {
-	customProfiler := MemTimeProfiler{}
-
-	target := PublicVariable{
-		Result: TestStructure{
-			Test1: 1,
-			Test2: 2,
-			Test3: 3,
-			Test4: 4,
-			Test5: 5,
-			Test6: 6,
-		},
+func (a *PublicMethod) Handle() {
+	if a.Result > a.value.Test1 {
+		a.Result = a.Result - a.value.Test1
+	} else {
+		a.Result = a.Result + a.value.Test1
 	}
-
-	rand.Seed(time.Now().UnixNano())
-	randomNumber := float64(rand.Intn(5-1) + 1)
-
-	customProfiler.Start()
-	for i := 0; i < million; i++ {
-		counter := target.Result.Test2 + randomNumber
-		target.Result.Test2 = counter
-	}
-	customProfiler.Finish()
-
-	fmt.Println(target.Result.Test2)
 }
 
-// Total heap alloc: 0 Mb 0 bytes. Time: 2.730752ms
+func (a *PublicMethod) SetValue(value TestStructure) {
+	a.value = value
+}
+
+// Size usage 0 B time usage 108.307281ms
 func TestPublicMethod(t *testing.T) {
-	customProfiler := MemTimeProfiler{}
+	p := MemTimeProfiler{}
+	randomValues := GenerateRandomTestStructures(tenMillions)
 
-	target := PublicMethod{
-		result: TestStructure{
-			Test1: 1,
-			Test2: 2,
-			Test3: 3,
-			Test4: 4,
-			Test5: 5,
-			Test6: 6,
-		},
+	var testObject PublicMethod
+
+	p.Start()
+	for i := 0; i < tenMillions; i++ {
+		testObject.SetValue(randomValues[i])
+		testObject.Handle()
 	}
-	rand.Seed(time.Now().UnixNano())
-	randomNumber := float64(rand.Intn(5-1) + 1)
+	p.Finish()
 
-	customProfiler.Start()
-	for i := 0; i < million; i++ {
-		counter := target.Result().Test2 + randomNumber
-		target.SetResult(counter)
-	}
-	customProfiler.Finish()
-
-	fmt.Println(target.Result().Test2)
+	fmt.Println("Size usage", p.Size(), "time usage", p.Time())
 }
