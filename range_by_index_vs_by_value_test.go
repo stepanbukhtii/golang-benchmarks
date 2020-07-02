@@ -16,7 +16,7 @@ func TestLoopByIndex(t *testing.T) {
 
 	var counter int64
 	p.Start()
-	for i := range randomValues {
+	for i := 0; i < tenMillions; i++ {
 		if counter > randomValues[i].Test1 {
 			counter = counter - randomValues[i].Test1
 		} else {

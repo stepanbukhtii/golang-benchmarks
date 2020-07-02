@@ -25,7 +25,7 @@ func (a *ArgsSlice) Handle(values []TestStructure) {
 	}
 }
 
-// Size usage 0 B time usage 123.208383ms
+// Size usage 0 B time usage 118.091721ms
 func TestSliceArgs(t *testing.T) {
 	p := MemTimeProfiler{}
 	randomValues := GenerateRandomTestStructures(tenMillions)
@@ -35,9 +35,9 @@ func TestSliceArgs(t *testing.T) {
 
 	p.Start()
 	for _, v := range randomValues {
-		testObject.Handle(argumentsSlice)
-		argumentsSlice[0] = argumentsSlice[1]
 		argumentsSlice[1] = v
+		testObject.Handle(argumentsSlice)
+		argumentsSlice[0] = v
 	}
 	p.Finish()
 

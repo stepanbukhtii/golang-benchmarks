@@ -21,6 +21,10 @@ type TestStructure struct {
 	Test10 int64
 }
 
+func (a TestStructure) GetValue() int64 {
+	return a.Test1
+}
+
 type TestValue struct {
 	Test1 int64
 	Test2 int64

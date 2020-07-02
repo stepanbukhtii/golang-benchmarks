@@ -6,7 +6,7 @@ import (
 )
 
 // change by public value vs change by public method
-// Result: by public value is faster
+// Result: read and change by public value is faster
 
 type PublicVariable struct {
 	Result int64
@@ -65,6 +65,36 @@ func TestPublicMethod(t *testing.T) {
 	p.Start()
 	for i := 0; i < tenMillions; i++ {
 		testObject.SetValue(randomValues[i])
+		testObject.Handle()
+	}
+	p.Finish()
+
+	fmt.Println("Size usage", p.Size(), "time usage", p.Time())
+}
+
+type ReadByMethod struct {
+	Result int64
+	Value  TestStructure
+}
+
+func (a *ReadByMethod) Handle() {
+	if a.Result > a.Value.GetValue() {
+		a.Result = a.Result - a.Value.GetValue()
+	} else {
+		a.Result = a.Result + a.Value.GetValue()
+	}
+}
+
+// Size usage 0 B time usage 146.301541ms
+func TestReadByMethod(t *testing.T) {
+	p := MemTimeProfiler{}
+	randomValues := GenerateRandomTestStructures(tenMillions)
+
+	var testObject ReadByMethod
+
+	p.Start()
+	for i := 0; i < tenMillions; i++ {
+		testObject.Value = randomValues[i]
 		testObject.Handle()
 	}
 	p.Finish()
